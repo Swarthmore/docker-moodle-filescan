@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  
+  php-apache:
+    build:
+      context: ./php-apache 
+    ports:
+      - 80:80
+    volumes:
+      - ./moodlewww:/var/www/html:cached
+      - ./moodledata:/var/www/moodledata:cached
+    links:
+      - 'mariadb'
+      - 'adminer'
+
+  mariadb:
+    image: mariadb:10.1
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mysql:cached 
+    environment:
+      MYSQL_DATABASE: moodle 
+      MYSQL_ROOT_PASSWORD: pepperonisecret 
+    command: mysqld --innodb-large-prefix --innodb-file-format=barracuda --innodb-file-per-table
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+volumes:
+  mariadb:
