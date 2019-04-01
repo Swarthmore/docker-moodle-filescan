@@ -3,7 +3,9 @@
 ## Requirements
 
 [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
 [Docker](https://docs.docker.com/install/)
+
 [Docker compose](https://docs.docker.com/compose/)
 
 ## Running
@@ -15,4 +17,6 @@
 
 
 ## Environment Variables
-You can edit the environment variables in `[mariadb]` `docker-compose.yml`. See the [MariaDB docker documentation](https://hub.docker.com/_/mariadb) for available environment variables.
+You can edit the environment variables in `[mariadb]` `docker-compose.yml`. 
+
+See the [MariaDB docker documentation](https://hub.docker.com/_/mariadb) for available environment variables.
