@@ -17,6 +17,7 @@
 
 ## Accessing
 Moodle: [http://localhost](http://localhost)
+
 Adminer: [http://localhost:8080](http://localhost:8080)
 
 ## Environment Variables
