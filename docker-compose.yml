@@ -15,7 +15,7 @@ services:
       - 'filescan-server'
       - 'adminer'
 
-  mycron:
+  moodlecron:
     build:
       context: ./php-apache
     volumes:
