@@ -14,6 +14,7 @@ COPY ./badproxyfix /etc/apt/apt.conf.d/99-badproxyfix
 RUN apt -o Acquire::https::No-Cache=True -o Acquire::http::No-Cache=True update
 RUN apt-get update
 RUN apt-get -y upgrade
+RUN apt-get -y install git sudo cron sendmail-bin
 
 # Install moodle php dependencies
 RUN docker-php-ext-install pdo pdo_mysql mysqli
@@ -29,3 +30,7 @@ RUN docker-php-ext-install opcache
 
 # Use opcache for improved performance
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# Set up Moodle cron
+COPY ./moodle_cron.sh /usr/local/run.sh
+RUN chmod 0744 /usr/local/run.sh

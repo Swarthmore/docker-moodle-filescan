@@ -1,18 +1,27 @@
-version: '3'
+version: '3.7'
 
 services:
-  
+
   php-apache:
     build:
       context: ./php-apache 
     ports:
       - 80:80
     volumes:
-      - ./moodlewww:/var/www/html:cached
-      - ./moodledata:/var/www/moodledata:cached
-    links:
+      - ./data/moodlewww:/var/www/html:cached
+      - ./data/moodledata:/var/www/moodledata:cached
+    depends_on:
       - 'mariadb'
+      - 'filescan-server'
       - 'adminer'
+
+  mycron:
+    build:
+      context: ./php-apache
+    volumes:
+      - ./data/moodlewww:/var/www/html:cached
+      - ./data/moodledata:/var/www/moodledata:cached
+    entrypoint: sh /usr/local/run.sh
 
   mariadb:
     image: mariadb:10.1
@@ -23,6 +32,18 @@ services:
       MYSQL_DATABASE: moodle 
       MYSQL_ROOT_PASSWORD: pepperonisecret 
     command: mysqld --innodb-large-prefix --innodb-file-format=barracuda --innodb-file-per-table
+    ports:
+      - 3306:3306
+
+  filescan-server:
+    build:
+      context: ./filescan-server
+    volumes:
+      - ./data/filescan:/usr/src/filescan-server:cached
+    ports:
+      - 9000:9000
+    working_dir: /usr/src/filescan-server
+    command: npm start
 
   adminer:
     image: adminer
